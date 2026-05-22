@@ -1,1059 +1,485 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Релокац: анкета для переезда в Испанию</title>
-  <meta name="description" content="Короткая анкета Релокац для подбора сценария переезда в Испанию." />
-  <style>
-    :root {
-      --white: #ffffff;
-      --black: #1e1e1e;
-      --graphite: #2c2c2c;
-      --muted: rgba(255, 255, 255, 0.72);
-      --soft-black: rgba(30, 30, 30, 0.72);
-      --page: #fafafa;
-      --line: #e4dfff;
-      --green: #42d18c;
-      --violet: #7d67ff;
-      --pale-violet: #ece9fe;
-      --pale-green: #e1f8ed;
-      --radius-lg: 20px;
-      --radius-md: 12px;
-      --radius-pill: 160px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-height: 100vh;
-      background: var(--page);
-      color: var(--black);
-      font-family: Manrope, Arial, sans-serif;
-      letter-spacing: 0;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-    }
-
-    .page {
-      display: grid;
-      grid-template-columns: 360px minmax(0, 1fr);
-      min-height: 100vh;
-      background: var(--page);
-    }
-
-    .sidebar {
-      position: sticky;
-      top: 0;
-      min-height: 100vh;
-      align-self: start;
-      padding: 32px;
-      background: var(--black);
-      color: var(--white);
-      border-radius: 0 40px 0 0;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      text-decoration: none;
-    }
-
-    .brand svg {
-      width: 32px;
-      height: 32px;
-      flex: 0 0 auto;
-    }
-
-    .brand span {
-      font-size: 23px;
-      font-weight: 500;
-      line-height: 1;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--white);
-      opacity: 0.86;
-      font-size: 12px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .back-link svg {
-      width: 14px;
-      height: 14px;
-      transform: rotate(-135deg);
-      fill: currentColor;
-    }
-
-    .country-card {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .country-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .flag {
-      width: 32px;
-      height: 24px;
-      border-radius: 4px;
-      object-fit: cover;
-      overflow: hidden;
-    }
-
-    .timezone {
-      padding: 4px 10px;
-      border-radius: 30px;
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .sidebar h1 {
-      font-size: 28px;
-      font-weight: 500;
-      line-height: 1.3;
-    }
-
-    .sidebar p {
-      color: var(--muted);
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 1.5;
-    }
-
-    .nav-list {
-      list-style: none;
-      border: 1px solid rgba(228, 223, 255, 0.1);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-top: auto;
-    }
-
-    .nav-list li {
-      min-height: 56px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 20px;
-      border-bottom: 1px solid rgba(228, 223, 255, 0.1);
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 1.5;
-    }
-
-    .nav-list li:last-child {
-      border-bottom: 0;
-    }
-
-    .nav-list .active {
-      background: var(--violet);
-      color: var(--white);
-    }
-
-    .nav-icon {
-      width: 24px;
-      height: 24px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      color: currentColor;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .content {
-      min-width: 0;
-      padding: 32px;
-    }
-
-    .hero {
-      min-height: calc(100vh - 64px);
-      display: grid;
-      grid-template-columns: minmax(0, 1.02fr) minmax(440px, 0.98fr);
-      gap: 32px;
-      align-items: stretch;
-      max-width: 1440px;
-      margin: 0 auto;
-    }
-
-    .intro {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 28px;
-      min-height: 100%;
-    }
-
-    .crumbs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      color: rgba(30, 30, 30, 0.34);
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    .hero-copy {
-      max-width: 690px;
-      padding-top: 24px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 99px;
-      background: var(--pale-green);
-      color: #137645;
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 24px;
-    }
-
-    .hero h2 {
-      max-width: 780px;
-      font-size: clamp(38px, 5.7vw, 86px);
-      font-weight: 600;
-      line-height: 0.98;
-      letter-spacing: 0;
-      margin-bottom: 24px;
-    }
-
-    .lead {
-      max-width: 660px;
-      color: rgba(30, 30, 30, 0.72);
-      font-size: 21px;
-      font-weight: 500;
-      line-height: 1.42;
-    }
-
-    .route-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 36px;
-      max-width: 850px;
-    }
-
-    .route {
-      min-height: 112px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: var(--white);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .route img {
-      width: 34px;
-      height: 34px;
-    }
-
-    .route span {
-      color: var(--black);
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.25;
-    }
-
-    .visual {
-      position: relative;
-      min-height: 280px;
-      overflow: hidden;
-      border-radius: 40px;
-      background: #ece9fe;
-    }
-
-    .visual img {
-      width: 100%;
-      height: 100%;
-      min-height: 320px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .visual-badge {
-      position: absolute;
-      left: 22px;
-      bottom: 22px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      border-radius: 20px;
-      background: rgba(30, 30, 30, 0.88);
-      color: var(--white);
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .form-wrap {
-      align-self: center;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 32px;
-      padding: 24px;
-      box-shadow: 0 24px 80px rgba(125, 103, 255, 0.12);
-    }
-
-    .form-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 18px;
-      margin-bottom: 20px;
-    }
-
-    .form-title {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .form-title strong {
-      font-size: 26px;
-      font-weight: 600;
-      line-height: 1.15;
-    }
-
-    .form-title span {
-      color: var(--soft-black);
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 1.35;
-    }
-
-    .step-pill {
-      flex: 0 0 auto;
-      padding: 8px 12px;
-      border-radius: 99px;
-      background: var(--pale-violet);
-      color: var(--violet);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .progress {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 5px;
-      margin-bottom: 20px;
-    }
-
-    .progress-dot {
-      height: 4px;
-      border-radius: 3px;
-      background: #edecf3;
-    }
-
-    .progress-dot.done {
-      background: var(--black);
-    }
-
-    .progress-dot.active {
-      background: var(--violet);
-    }
-
-    .card,
-    .result-card {
-      display: none;
-    }
-
-    .card.active,
-    .result-card.active {
-      display: block;
-    }
-
-    .card-num {
-      color: rgba(30, 30, 30, 0.48);
-      font-size: 12px;
-      font-weight: 800;
-      line-height: 1.3;
-      margin-bottom: 8px;
-    }
-
-    .card h3,
-    .result-card h3 {
-      font-size: 22px;
-      font-weight: 600;
-      line-height: 1.3;
-      letter-spacing: 0;
-      margin-bottom: 18px;
-    }
-
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .opt {
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 14px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      color: var(--black);
-      background: var(--white);
-      font-size: 15px;
-      font-weight: 600;
-      line-height: 1.3;
-      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
-      user-select: none;
-    }
-
-    .opt:hover {
-      border-color: #d2cafb;
-      background: #f7f6fd;
-      transform: translateY(-1px);
-    }
-
-    .opt.selected {
-      border-color: var(--violet);
-      background: var(--pale-violet);
-      color: var(--violet);
-    }
-
-    .check {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 1.5px solid #b0abcb;
-      flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--white);
-    }
-
-    .opt.selected .check {
-      background: var(--violet);
-      border-color: var(--violet);
-    }
-
-    .opt.selected .check::after {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--white);
-    }
-
-    .opt.multi .check {
-      border-radius: 4px;
-    }
-
-    .opt.multi.selected .check::after {
-      width: 10px;
-      height: 7px;
-      border-radius: 0;
-      border-right: 2px solid var(--white);
-      border-bottom: 2px solid var(--white);
-      background: transparent;
-      transform: rotate(40deg) translate(-1px, -2px);
-    }
-
-    .custom-input {
-      min-height: 48px;
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      background: var(--white);
-      color: var(--black);
-      font-size: 15px;
-      font-weight: 600;
-      outline: none;
-    }
-
-    .custom-input:focus {
-      border-color: var(--violet);
-      box-shadow: 0 0 0 4px rgba(125, 103, 255, 0.1);
-    }
-
-    .err {
-      display: none;
-      color: #d44848;
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-top: 8px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .btn-next,
-    .btn-back,
-    .cta {
-      min-height: 52px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-pill);
-      padding: 13px 24px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 800;
-      line-height: 1.2;
-      text-decoration: none;
-      transition: opacity 0.15s, transform 0.15s, background 0.15s;
-    }
-
-    .btn-next,
-    .cta {
-      flex: 1;
-      background: var(--green);
-      color: var(--white);
-    }
-
-    .btn-back {
-      width: 52px;
-      flex: 0 0 52px;
-      background: var(--pale-violet);
-      color: var(--violet);
-    }
-
-    .btn-next:hover,
-    .btn-back:hover,
-    .cta:hover {
-      transform: translateY(-1px);
-      opacity: 0.9;
-    }
-
-    .result-card {
-      text-align: center;
-      padding: 8px 0 4px;
-    }
-
-    .result-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--pale-violet);
-      color: var(--violet);
-      margin: 0 auto 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .result-icon svg {
-      width: 27px;
-      height: 27px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .result-card p {
-      max-width: 420px;
-      margin: 0 auto 22px;
-      color: var(--soft-black);
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.5;
-    }
-
-    .footer-note {
-      max-width: 1440px;
-      margin: 32px auto 0;
-      padding-top: 24px;
-      border-top: 1px solid var(--line);
-      color: rgba(30, 30, 30, 0.5);
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.4;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .footer-note a {
-      color: var(--violet);
-      text-decoration: none;
-    }
-
-    @media (max-width: 1180px) {
-      .page {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: relative;
-        min-height: auto;
-        border-radius: 0 0 24px 24px;
-        padding: 20px;
-      }
-
-      .sidebar-top {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        align-items: center;
-      }
-
-      .back-link,
-      .nav-list {
-        display: none;
-      }
-
-      .country-card {
-        max-width: 720px;
-      }
-
-      .hero {
-        min-height: auto;
-        grid-template-columns: 1fr;
-      }
-
-      .form-wrap {
-        align-self: stretch;
-      }
-    }
-
-    @media (max-width: 720px) {
-      .content {
-        padding: 18px;
-      }
-
-      .sidebar {
-        padding: 16px;
-        gap: 18px;
-      }
-
-      .sidebar-top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .sidebar h1 {
-        font-size: 26px;
-      }
-
-      .sidebar p {
-        font-size: 15px;
-      }
-
-      .hero-copy {
-        padding-top: 8px;
-      }
-
-      .hero h2 {
-        font-size: 40px;
-        line-height: 1.02;
-      }
-
-      .lead {
-        font-size: 18px;
-      }
-
-      .route-grid {
-        grid-template-columns: 1fr;
-        margin-top: 24px;
-      }
-
-      .visual {
-        border-radius: 24px;
-      }
-
-      .form-wrap {
-        border-radius: 24px;
-        padding: 18px;
-      }
-
-      .form-head {
-        flex-direction: column;
-      }
-
-      .form-title strong {
-        font-size: 23px;
-      }
-
-      .card h3,
-      .result-card h3 {
-        font-size: 20px;
-      }
-
-      .footer-note {
-        flex-direction: column;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Переезд в Сербию — ВНЖ за 30 дней, налог 3% для ИП, русскоязычное сообщество. Бесплатная консультация специалиста по релокации.">
+<title>Переезд в Сербию — Записаться к специалисту | Релокац</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #F5F7FA; color: #000; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #F7F8FA; }
+::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 10px; }
+#root { min-height: 100vh; }
+
+.rl-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(247,248,250,0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid #E5E7EB; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.25rem,4vw,3rem); transition: box-shadow 0.3s ease; }
+.rl-nav.scrolled { box-shadow: 0 1px 20px rgba(0,0,0,0.06); }
+.rl-nav-logo { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; color: #000; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.rl-nav-logo-dot { width: 8px; height: 8px; border-radius: 50%; background: #2563EB; }
+.rl-nav-links { display: flex; align-items: center; gap: 2rem; }
+.rl-nav-link { font-size: 0.875rem; font-weight: 500; color: #6B7280; text-decoration: none; transition: color 0.15s; }
+.rl-nav-link:hover { color: #111827; }
+.rl-nav-cta { background: linear-gradient(135deg,#1a1a1a 0%,#000 100%); color: #fff; padding: 9px 20px; border-radius: 12px; font-family: 'Inter',sans-serif; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s,transform 0.1s,box-shadow 0.2s; white-space: nowrap; }
+.rl-nav-cta:hover { opacity: 0.85; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.22); }
+
+.rl-hero { min-height: 100vh; padding-top: 64px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding-left: clamp(1.25rem,5vw,5vw); padding-right: clamp(1.25rem,4vw,4vw); gap: 3rem; position: relative; overflow: hidden; }
+.rl-hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 65%; height: 140%; background: radial-gradient(ellipse at 70% 35%,#DBEAFE 0%,#EEF2FF 30%,#F5F7FA 60%,transparent 80%); pointer-events: none; z-index: 0; }
+.rl-hero::after { content: ''; position: absolute; bottom: -10%; left: -5%; width: 45%; height: 60%; background: radial-gradient(ellipse at 30% 70%,#F0FDF4 0%,transparent 65%); pointer-events: none; z-index: 0; }
+.rl-hero-left { position: relative; z-index: 1; padding: 5rem 0; }
+.rl-hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; background: #EFF6FF; border: 1px solid #DBEAFE; color: #1D4ED8; font-size: 0.75rem; font-weight: 600; padding: 5px 12px; border-radius: 20px; margin-bottom: 1.5rem; letter-spacing: 0.02em; }
+.rl-h1 { font-family: 'Manrope',sans-serif; font-size: clamp(2.5rem,4.5vw,4rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; color: #000; margin-bottom: 0.25rem; }
+.rl-h1-accent { color: #2563EB; display: block; }
+.rl-hero-desc { font-size: 1rem; color: #6B7280; line-height: 1.7; margin-bottom: 2rem; max-width: 500px; font-weight: 400; }
+.rl-pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+.rl-pill { display: inline-flex; align-items: center; gap: 5px; background: #fff; border: 1px solid #E5E7EB; color: #374151; font-size: 0.78rem; font-weight: 500; padding: 5px 12px; border-radius: 20px; transition: border-color 0.15s,box-shadow 0.15s; }
+.rl-pill:hover { border-color: #D1D5DB; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.rl-pill-dot { width: 5px; height: 5px; border-radius: 50%; background: #10B981; flex-shrink: 0; }
+.rl-hero-stats { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; }
+.rl-hero-stat .rl-sn { font-family: 'Manrope',sans-serif; font-size: 1.9rem; font-weight: 800; letter-spacing: -0.04em; color: #000; line-height: 1; }
+.rl-hero-stat .rl-sl { font-size: 0.75rem; color: #9CA3AF; line-height: 1.4; margin-top: 3px; }
+.rl-hero-btns { display: flex; align-items: center; gap: 0.875rem; flex-wrap: wrap; }
+.rl-btn-primary { background: linear-gradient(135deg,#2563EB 0%,#1D4ED8 50%,#1e40af 100%); color: #fff; padding: 13px 24px; border-radius: 14px; font-family: 'Inter',sans-serif; font-size: 0.9rem; font-weight: 600; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s,transform 0.1s,box-shadow 0.2s; white-space: nowrap; display: inline-block; }
+.rl-btn-primary:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,99,235,0.35); }
+.rl-btn-secondary { background: transparent; color: #374151; padding: 12px 20px; border-radius: 14px; border: 1px solid #E5E7EB; font-family: 'Inter',sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: border-color 0.15s,background 0.15s; display: inline-block; }
+.rl-btn-secondary:hover { border-color: #D1D5DB; background: #fff; }
+
+.rl-hero-right { position: relative; z-index: 1; padding: 5rem 0; display: flex; align-items: center; justify-content: center; }
+.rl-belgrade-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 24px; width: 100%; max-width: 420px; box-shadow: 0 4px 40px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.04); overflow: hidden; position: relative; }
+.rl-card-header { background: linear-gradient(135deg,#EEF2FF 0%,#E0F2FE 50%,#F0FDF4 100%); padding: 1.5rem 1.5rem 1.25rem; border-bottom: 1px solid #E5E7EB; position: relative; }
+.rl-card-flag { position: absolute; right: 1.25rem; top: 1.1rem; font-size: 2.2rem; opacity: 0.6; }
+.rl-card-city { font-family: 'Manrope',sans-serif; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.04em; color: #000; }
+.rl-card-sub { font-size: 0.75rem; color: #9CA3AF; margin-top: 3px; line-height: 1.4; }
+.rl-card-rows { padding: 0.5rem 0; }
+.rl-card-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.5rem; border-bottom: 1px solid #F3F4F6; transition: background 0.1s; }
+.rl-card-row:last-child { border-bottom: none; }
+.rl-card-row:hover { background: #FAFAFA; }
+.rl-row-left { display: flex; align-items: center; gap: 10px; }
+.rl-row-ic { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+.ic-green { background: #F0FDF4; } .ic-blue { background: #EFF6FF; } .ic-gray { background: #F9FAFB; }
+.rl-row-label { font-size: 0.82rem; font-weight: 600; color: #000; display: block; }
+.rl-row-sub { font-size: 0.72rem; color: #9CA3AF; display: block; margin-top: 1px; }
+.rl-row-val { font-size: 0.82rem; font-weight: 700; white-space: nowrap; }
+.val-green { color: #059669; } .val-blue { color: #2563EB; } .val-muted { color: #6B7280; }
+.rl-badge-float { position: absolute; background: #fff; border: 1px solid #E5E7EB; border-radius: 14px; padding: 8px 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); white-space: nowrap; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+.rl-badge-float .bf-num { font-family:'Manrope',sans-serif; font-size:1rem; font-weight:800; color:#000; display:block; line-height:1.1; }
+.rl-badge-float .bf-sub { font-size:0.7rem; color:#9CA3AF; }
+.bf-pos1 { top:2rem; right:-3rem; animation-delay:0s; }
+.bf-pos2 { bottom:5rem; left:-3rem; animation-delay:1.5s; }
+
+.rl-section { padding: 5.5rem clamp(1.25rem,5vw,5vw); }
+.rl-section-alt { background: #fff; }
+.rl-section-why { background: linear-gradient(180deg,#fff 0%,#F8FAFF 100%); }
+.rl-sec-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #2563EB; margin-bottom: 0.5rem; }
+.rl-sec-title { font-family: 'Manrope',sans-serif; font-size: clamp(1.75rem,3vw,2.5rem); font-weight: 800; letter-spacing: -0.04em; color: #000; margin-bottom: 0.75rem; line-height: 1.2; }
+.rl-sec-sub { font-size: 0.95rem; color: #6B7280; line-height: 1.65; max-width: 540px; }
+
+.rl-why-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 1rem; margin-top: 2.5rem; }
+.rl-why-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 20px; padding: 1.5rem; transition: transform 0.2s,box-shadow 0.2s,border-color 0.2s; cursor: default; }
+.rl-why-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-color: #D1D5DB; }
+.rl-wc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.875rem; }
+.rl-wc-icon { font-size: 1.5rem; }
+.rl-wc-tag { font-size: 0.68rem; font-weight: 600; padding: 3px 9px; border-radius: 8px; }
+.tag-green { background: #F0FDF4; color: #059669; } .tag-blue { background: #EFF6FF; color: #2563EB; } .tag-amber { background: #FFFBEB; color: #D97706; } .tag-gray { background: #F9FAFB; color: #6B7280; border: 1px solid #E5E7EB; }
+.rl-why-card h3 { font-size: 0.9rem; font-weight: 700; color: #000; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+.rl-why-card p { font-size: 0.8rem; color: #6B7280; line-height: 1.6; }
+
+.rl-nums-section { background: linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#0f172a 100%); }
+.rl-nums-section .rl-sec-label { color: #60a5fa; }
+.rl-nums-section .rl-sec-title { color: #fff; }
+.rl-nums-section .rl-sec-sub { color: rgba(255,255,255,0.55); }
+.rl-nums-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: 1px; margin-top: 2.5rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden; }
+.rl-num-item { padding: 1.75rem 1.5rem; background: rgba(255,255,255,0.04); border-right: 1px solid rgba(255,255,255,0.07); border-bottom: 1px solid rgba(255,255,255,0.07); transition: background 0.15s; }
+.rl-num-item:hover { background: rgba(255,255,255,0.09); }
+.rl-num-big { font-family: 'Manrope',sans-serif; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.05em; background: linear-gradient(135deg,#60a5fa 0%,#a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.4rem; }
+.rl-num-desc { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.45; }
+
+.rl-steps-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 1rem; margin-top: 2.5rem; }
+.rl-step-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 20px; padding: 1.75rem; position: relative; overflow: hidden; transition: transform 0.2s,box-shadow 0.2s; }
+.rl-step-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+.rl-step-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,#2563EB 0%,#7c3aed 100%); }
+.rl-step-num { font-family: 'Manrope',sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: -0.06em; background: linear-gradient(135deg,#DBEAFE 0%,#EDE9FE 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.75rem; }
+.rl-step-card h4 { font-size: 0.9rem; font-weight: 700; color: #000; margin-bottom: 0.4rem; }
+.rl-step-card p { font-size: 0.8rem; color: #6B7280; line-height: 1.55; }
+
+.rl-rev-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(290px,1fr)); gap: 1rem; margin-top: 2.5rem; }
+.rl-rev-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 20px; padding: 1.5rem; transition: transform 0.2s,box-shadow 0.2s; }
+.rl-rev-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+.rl-rev-stars { color: #F59E0B; font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 0.875rem; }
+.rl-rev-text { font-size: 0.85rem; color: #374151; line-height: 1.65; margin-bottom: 1.125rem; }
+.rl-rev-author { display: flex; align-items: center; gap: 10px; }
+.rl-rev-ava { width: 36px; height: 36px; border-radius: 50%; background: #EFF6FF; color: #2563EB; font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Manrope',sans-serif; }
+.rl-rev-name { font-size: 0.83rem; font-weight: 700; color: #000; }
+.rl-rev-city { font-size: 0.72rem; color: #9CA3AF; margin-top: 1px; }
+
+.rl-form-section { background: linear-gradient(180deg,#F8FAFF 0%,#EEF2FF 100%); }
+.rl-form-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem,5vw,5rem); align-items: start; }
+.rl-fi h2 { font-family: 'Manrope',sans-serif; font-size: clamp(1.6rem,2.8vw,2.25rem); font-weight: 800; line-height: 1.2; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: #000; }
+.rl-fi-sub { font-size: 0.9rem; color: #6B7280; line-height: 1.65; margin-bottom: 2rem; }
+.rl-perks { display: flex; flex-direction: column; gap: 1rem; }
+.rl-perk { display: flex; align-items: flex-start; gap: 12px; }
+.rl-perk-ic { width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; background: #fff; border: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-top: 1px; }
+.rl-perk strong { font-size: 0.85rem; font-weight: 700; color: #000; display: block; margin-bottom: 2px; }
+.rl-perk span { font-size: 0.78rem; color: #9CA3AF; line-height: 1.45; }
+.rl-form-box { background: #fff; border: 1px solid #E5E7EB; border-radius: 24px; padding: clamp(1.5rem,3vw,2.25rem); box-shadow: 0 4px 40px rgba(0,0,0,0.06); }
+.rl-form-box h3 { font-family: 'Manrope',sans-serif; font-size: 1.15rem; font-weight: 800; letter-spacing: -0.03em; color: #000; margin-bottom: 0.25rem; }
+.rl-form-box .fsub { font-size: 0.78rem; color: #9CA3AF; margin-bottom: 1.5rem; }
+.rl-cta-box { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3rem 2.5rem; }
+.rl-cta-icon { font-size: 3rem; margin-bottom: 1.25rem; line-height: 1; }
+.rl-cta-box h3 { font-size: 1.35rem; margin-bottom: 0.4rem; }
+.rl-cta-box .fsub { max-width: 340px; margin-bottom: 2rem; }
+.rl-submit-link { display: block; text-decoration: none !important; text-align: center; width: 100%; background: linear-gradient(135deg,#2563EB 0%,#1D4ED8 50%,#1e40af 100%) !important; background-clip: unset !important; -webkit-background-clip: unset !important; color: #fff !important; -webkit-text-fill-color: #fff !important; border: none; padding: 16px 24px; border-radius: 14px; font-family: 'Inter',sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.15s,transform 0.15s,box-shadow 0.2s; box-shadow: 0 4px 20px rgba(37,99,235,0.35); }
+.rl-submit-link:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,99,235,0.45); }
+.rl-form-note { text-align: center; font-size: 0.71rem; color: #9CA3AF; margin-top: 0.75rem; }
+
+.rl-footer { background: #fff; border-top: 1px solid #E5E7EB; padding: 2.5rem clamp(1.25rem,5vw,5vw); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; position: relative; }
+.rl-footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg,#2563EB 0%,#7c3aed 50%,#2563EB 100%); background-size: 200% 100%; animation: shimmer 4s linear infinite; }
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+.rl-footer-logo { font-family: 'Manrope',sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: -0.02em; color: #000; display: flex; align-items: center; gap: 7px; }
+.rl-footer-copy { font-size: 0.75rem; color: #9CA3AF; }
+.rl-footer-links { display: flex; gap: 1.5rem; }
+.rl-footer-links a { color: #9CA3AF; font-size: 0.78rem; text-decoration: none; transition: color 0.15s; }
+.rl-footer-links a:hover { color: #2563EB; }
+
+.rl-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease,transform 0.55s ease; }
+.rl-fade.rl-visible { opacity: 1; transform: none; }
+
+@media (max-width: 960px) {
+  .rl-hero { grid-template-columns: 1fr; gap: 2rem; padding: 0 1.25rem 3rem; }
+  .rl-hero-left { padding: 4rem 0 1rem; }
+  .rl-hero-right { padding: 0 0 3rem; }
+  .rl-belgrade-card { max-width: 100%; }
+  .bf-pos1,.bf-pos2 { display: none; }
+  .rl-form-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .rl-nav-links .rl-nav-link { display: none; }
+}
+@media (max-width: 540px) {
+  .rl-hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  .rl-h1 { font-size: 2.2rem; }
+  .rl-nums-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
 </head>
 <body>
-  <main class="page">
-    <aside class="sidebar">
-      <div class="sidebar-top">
-        <a class="brand" href="https://relokatz.com/" target="_blank" rel="noreferrer">
-          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" aria-hidden="true">
-            <path stroke-width="1.856" d="M30.586 15.217c0 7.542-6.026 13.634-13.434 13.634S3.718 22.76 3.718 15.217 9.745 1.582 17.152 1.582s13.434 6.092 13.434 13.635Z"></path>
-            <path stroke-width="1.856" d="M1.958 24.693c-.62 2.045-.622 3.52.13 4.093 1.946 1.483 8.212-3.64 13.994-11.444a68 68 0 0 0 2.84-4.141"></path>
-            <path fill="currentColor" stroke="none" d="M11.304 11.324c-.284-.426.098-.98.59-.855l4.74 1.2c.153.038.314.01.444-.08l4.043-2.767c.42-.287.97.104.848.602l-1.181 4.8a.57.57 0 0 0 .078.448l2.735 4.106c.283.426-.099.98-.59.855l-4.741-1.2a.55.55 0 0 0-.443.08l-4.043 2.767c-.42.288-.971-.103-.849-.602l1.181-4.799a.57.57 0 0 0-.078-.449z"></path>
-          </svg>
-          <span>РЕЛОКАЦ</span>
-        </a>
-        <a class="back-link" href="https://relokatz.com/country/es" target="_blank" rel="noreferrer">
-          <svg viewBox="0 0 14 14" aria-hidden="true">
-            <path d="M2.58557 10.286L9.61635 3.2552L10.5234 4.16227L3.49264 11.193L2.58557 10.286Z"></path>
-            <path d="M10.5192 9.33845H9.24852L9.24896 4.53006L4.44057 4.5305L4.44057 3.25983L10.5188 3.26027L10.5192 9.33845Z"></path>
-          </svg>
-          Вернуться назад
-        </a>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const TG = "https://t.me/relokatz_serbia_bot";
+
+const BELGRADE_ROWS = [
+  { icon:"🛡️", label:"Безопасность", sub:"Индекс преступности — один из самых низких", val:"74/100", vc:"val-green", ic:"ic-green" },
+  { icon:"💻", label:"Налог для ИП в ИТ", sub:"Паушальная система", val:"3%", vc:"val-blue", ic:"ic-blue" },
+  { icon:"📄", label:"Много путей к ВНЖ", sub:"ИП, талант, работа, учёба", val:"30 дней", vc:"val-green", ic:"ic-green" },
+  { icon:"⏱️", label:"Без визарана", sub:"Через 30 дней можно не делать визаран", val:"с ВНЖ", vc:"val-muted", ic:"ic-gray" },
+  { icon:"🏠", label:"Аренда квартиры", sub:"1-комнатная, Белград", val:"от €400/мес", vc:"val-muted", ic:"ic-gray" },
+  { icon:"👥", label:"Русскоязычное сообщество", sub:"Помощь с адаптацией, школами и бытом", val:"150 000+", vc:"val-blue", ic:"ic-blue" },
+];
+
+const WHY_CARDS = [
+  { icon:"🛡️", tag:"Индекс 74/100", tc:"tag-green", title:"Высокая безопасность", text:"Сербия занимает одно из первых мест в Европе по уровню личной безопасности. Вечером можно спокойно гулять по центру Белграда с детьми." },
+  { icon:"💻", tag:"3% налог для ИП в ИТ", tc:"tag-blue", title:"ИТ-услуги и инфраструктура", text:"Один из самых быстрорастущих IT-рынков Европы, рекордные €4,55 млрд в 2025 году. Быстрый интернет, много IT-компаний, налоговые льготы для стартапов." },
+  { icon:"👥", tag:"150 000+ человек", tc:"tag-green", title:"Русскоязычное сообщество", text:"Более 150 000 русскоязычных в Белграде. Живые чаты, встречи, совместные проекты, школы на русском — вы не будете одни." },
+  { icon:"💶", tag:"В 2–3 раза дешевле", tc:"tag-gray", title:"Доступная стоимость жизни", text:"Аренда квартиры в Белграде — от €400/мес. Обед в кафе — €4–8. Уровень жизни европейский, а цены балканские." },
+  { icon:"🏦", tag:"Счёт за 1 день", tc:"tag-green", title:"Банки и финансы", text:"Открыть счёт в сербском банке можно за 1 день по паспорту. Работают переводы SWIFT, Revolut, Wise. Карты принимают по всему миру." },
+  { icon:"✈️", tag:"100+ направлений", tc:"tag-blue", title:"Удобная логистика", text:"Белград — хаб с прямыми рейсами в 100+ городов мира. Виза не нужна для въезда. Аэропорт в 20 минутах от центра." },
+  { icon:"🇪🇺", tag:"Кандидат в ЕС", tc:"tag-amber", title:"Путь к европейскому будущему", text:"Сербия — кандидат в члены ЕС. Серьёзные перспективы европейского паспорта. Уже сейчас — свобода путешествий в десятки стран." },
+];
+
+const NUMS = [
+  { num:"€400", desc:"аренда 1-комнатной квартиры в Белграде от" },
+  { num:"30",   desc:"дней — срок подачи на ВНЖ через ИП" },
+  { num:"3%",   desc:"налог на доход для ИП (паушальный)" },
+  { num:"150к+",desc:"русскоязычных жителей только в Белграде" },
+  { num:"100+", desc:"направлений из аэропорта Белграда" },
+];
+
+const STEPS = [
+  { n:"01", title:"Консультация", text:"Разбираем вашу ситуацию: цели, сроки, состав семьи. Выбираем оптимальное основание для ВНЖ." },
+  { n:"02", title:"Подготовка документов", text:"Собираем пакет документов, делаем переводы, помогаем открыть ИП и счета." },
+  { n:"03", title:"Переезд и обустройство", text:"Помощь с жильём, школами, банком, медициной. Знакомство с сообществом релокантов." },
+  { n:"04", title:"Получение ВНЖ", text:"Сопровождаем в МУП, контролируем сроки. Вы получаете карту резидента и спокойно живёте." },
+];
+
+const REVIEWS = [
+  { i:"АМ", name:"Антон М.", city:"Разработчик, Белград", text:"«За три недели открыли ИП, нашли квартиру в Белграде и подали документы на ВНЖ. Специалист был на связи 24/7 — ни одного вопроса без ответа. Рекомендую!»" },
+  { i:"ЕС", name:"Елена С.", city:"Предприниматель, Нови Сад", text:"«Переезжали всей семьей с двумя детьми. Думали, будет сложно, было очень страшно. Специалист не только помогла сделать ВНЖ, но и помог найти школу и подсказал по медицине. Все прошло легко!»" },
+  { i:"КВ", name:"Кирилл В.", city:"Product Manager, Белград", text:"«Сербия оказалась лучшим выбором. Налоги минимальные, люди дружелюбные, и я уже чувствую себя частью русскоязычного IT-сообщества Белграда, у меня появилось много новых друзей.»" },
+];
+
+const PERKS = [
+  { icon:"✅", title:"Без воды и общих фраз", sub:"Разбираем конкретно вашу ситуацию и предлагаем реальный план" },
+  { icon:"🔒", title:"Конфиденциальность", sub:"Ваши данные не передаются третьим лицам" },
+  { icon:"⚡", title:"Быстрый ответ", sub:"Перезвоним или напишем в мессенджер в течение суток" },
+  { icon:"🎁", title:"Первичная консультация бесплатно", sub:"Никаких скрытых платежей на этапе знакомства" },
+];
+
+function useFade() {
+  const ref = useRef(null);
+  const [vis, setVis] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setVis(true); obs.unobserve(el); }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return [ref, vis];
+}
+
+function Fade({ children, delay = 0 }) {
+  const [ref, vis] = useFade();
+  return (
+    <div ref={ref} className={`rl-fade${vis ? " rl-visible" : ""}`} style={{ transitionDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
+}
+
+function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const h = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", h);
+    return () => window.removeEventListener("scroll", h);
+  }, []);
+  return (
+    <nav className={`rl-nav${scrolled ? " scrolled" : ""}`}>
+      <a className="rl-nav-logo" href="#">
+        <div className="rl-nav-logo-dot"></div>Релокац
+      </a>
+      <div className="rl-nav-links">
+        <a className="rl-nav-link" href="#why">Почему Сербия?</a>
+        <a className="rl-nav-link" href="#process">Как получить ВНЖ?</a>
+        <a className="rl-nav-link" href="#cta">О стране</a>
+        <a className="rl-nav-cta" href={TG} target="_blank" rel="noopener noreferrer">Записаться к специалисту</a>
       </div>
+    </nav>
+  );
+}
 
-      <section class="country-card" aria-label="Испания">
-        <div class="country-meta">
-          <img class="flag" src="Sh_B_P_18743fe758.png" alt="Флаг Испании" />
-          <span class="timezone">UTC +2</span>
+function Hero() {
+  return (
+    <section className="rl-hero">
+      <div className="rl-hero-left rl-fade rl-visible">
+        <div className="rl-hero-eyebrow">🇷🇸 Сербия — топ выбор 2025–2026</div>
+        <h1 className="rl-h1">Переезд в Сербию<span className="rl-h1-accent">проще, чем кажется</span></h1>
+        <p className="rl-hero-desc">Безвизовый въезд, русскоязычное сообщество, льготный налоговый режим для ИП и ВНЖ за 30 дней. Наш специалист проведёт вас от «хочу переехать» до «уже живу в Белграде».</p>
+        <div className="rl-pill-row">
+          {["Безвизовый въезд","Подача на ВНЖ за 30 дней","Налог 3% для ИП","Кандидат в ЕС"].map((p,i) => (
+            <div key={i} className="rl-pill"><span className="rl-pill-dot"></span>{p}</div>
+          ))}
         </div>
-        <h1>Уехать в Испанию</h1>
-        <p>Одна из самых доступных для эмиграции стран Западной Европы</p>
-      </section>
-
-      <ul class="nav-list" aria-label="Разделы">
-        <li class="active"><span class="nav-icon">1</span>Легализация</li>
-        <li><span class="nav-icon">2</span>Помощь с переездом</li>
-        <li><span class="nav-icon">3</span>О стране</li>
-        <li><span class="nav-icon">4</span>Деньги и налоги</li>
-      </ul>
-    </aside>
-
-    <section class="content">
-      <div class="hero">
-        <div class="intro">
-          <div>
-            <nav class="crumbs" aria-label="Хлебные крошки">
-              <span>Главная</span><span>/</span><span>Каталог</span><span>/</span><span>Испания</span>
-            </nav>
-
-            <div class="hero-copy">
-              <span class="eyebrow">Анкета проекта Релокац</span>
-              <h2>Подберите маршрут переезда за пару минут</h2>
-              <p class="lead">Ответьте на 7 вопросов, и мы покажем следующий шаг: консультацию по испанской визе цифрового кочевника или быстрый разбор кейса в Telegram.</p>
-
-              <div class="route-grid" aria-label="Популярные основания для ВНЖ">
-                <div class="route">
-                  <img src="digital_nomad_4a46e24368.svg" alt="" />
-                  <span>Виза цифрового кочевника</span>
+        <div className="rl-hero-stats">
+          {[{n:"3 мес.",l:"карточка ВНЖ\nготова через"},{n:"3%",l:"налог\nдля ИП"},{n:"150к+",l:"русскоязычных\nв Белграде"}].map((s,i) => (
+            <div key={i} className="rl-hero-stat">
+              <div className="rl-sn">{s.n}</div>
+              <div className="rl-sl">{s.l.split("\n").map((x,j) => <span key={j}>{x}<br/></span>)}</div>
+            </div>
+          ))}
+        </div>
+        <div className="rl-hero-btns">
+          <a href={TG} target="_blank" rel="noopener noreferrer" className="rl-btn-primary">Записаться на консультацию →</a>
+          <a href="#why" className="rl-btn-secondary">Почему Сербия?</a>
+        </div>
+      </div>
+      <div className="rl-hero-right">
+        <div className="rl-belgrade-card">
+          <div className="rl-card-header">
+            <div className="rl-card-flag">🇷🇸</div>
+            <div className="rl-card-city">Белград</div>
+            <div className="rl-card-sub">Разница с Москвой −2 ч зимой и −1 летом · Комфортная страна для релокантов</div>
+          </div>
+          <div className="rl-card-rows">
+            {BELGRADE_ROWS.map((r,i) => (
+              <div key={i} className="rl-card-row">
+                <div className="rl-row-left">
+                  <div className={`rl-row-ic ${r.ic}`}>{r.icon}</div>
+                  <div><span className="rl-row-label">{r.label}</span><span className="rl-row-sub">{r.sub}</span></div>
                 </div>
-                <div class="route">
-                  <img src="education_f3dae4209d.svg" alt="" />
-                  <span>Учёба и курсы</span>
-                </div>
-                <div class="route">
-                  <img src="Business_0b3f14487e.svg" alt="" />
-                  <span>Бизнес и стартапы</span>
-                </div>
+                <div className={`rl-row-val ${r.vc}`}>{r.val}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rl-badge-float bf-pos1"><span className="bf-num">600+</span><span className="bf-sub">клиентов уехали</span></div>
+        <div className="rl-badge-float bf-pos2"><span className="bf-num">4.9★</span><span className="bf-sub">средняя оценка</span></div>
+      </div>
+    </section>
+  );
+}
+
+function WhySection() {
+  return (
+    <section className="rl-section rl-section-why" id="why">
+      <Fade>
+        <div className="rl-sec-label">Почему Сербия</div>
+        <h2 className="rl-sec-title">7 причин выбрать именно эту страну</h2>
+        <p className="rl-sec-sub">Сербия — не просто перевалочный пункт. Это место, где люди остаются навсегда. Вот почему</p>
+      </Fade>
+      <div className="rl-why-grid">
+        {WHY_CARDS.map((c,i) => (
+          <Fade key={i} delay={i*60}>
+            <div className="rl-why-card">
+              <div className="rl-wc-top"><span className="rl-wc-icon">{c.icon}</span><span className={`rl-wc-tag ${c.tc}`}>{c.tag}</span></div>
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </div>
+          </Fade>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function NumbersSection() {
+  return (
+    <section className="rl-section rl-nums-section">
+      <Fade>
+        <div className="rl-sec-label">Цифры говорят сами</div>
+        <h2 className="rl-sec-title">Сербия в цифрах</h2>
+        <p className="rl-sec-sub">Данные, которые убеждают лучше слов</p>
+      </Fade>
+      <div className="rl-nums-grid">
+        {NUMS.map((it,i) => (
+          <Fade key={i} delay={i*80}>
+            <div className="rl-num-item">
+              <div className="rl-num-big">{it.num}</div>
+              <div className="rl-num-desc">{it.desc}</div>
+            </div>
+          </Fade>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProcessSection() {
+  return (
+    <section className="rl-section rl-section-alt" id="process">
+      <Fade>
+        <div className="rl-sec-label">Как получить ВНЖ?</div>
+        <h2 className="rl-sec-title">4 шага до новой жизни</h2>
+        <p className="rl-sec-sub">Мы сопровождаем вас на каждом этапе — от первого созвона до карточки ВНЖ в кармане</p>
+      </Fade>
+      <div className="rl-steps-grid">
+        {STEPS.map((s,i) => (
+          <Fade key={i} delay={i*80}>
+            <div className="rl-step-card">
+              <div className="rl-step-num">{s.n}</div>
+              <h4>{s.title}</h4>
+              <p>{s.text}</p>
+            </div>
+          </Fade>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TestimonialsSection() {
+  return (
+    <section className="rl-section">
+      <Fade>
+        <div className="rl-sec-label">Истории переезда</div>
+        <h2 className="rl-sec-title">Что говорят наши клиенты</h2>
+      </Fade>
+      <div className="rl-rev-grid">
+        {REVIEWS.map((r,i) => (
+          <Fade key={i} delay={i*80}>
+            <div className="rl-rev-card">
+              <div className="rl-rev-stars">★★★★★</div>
+              <p className="rl-rev-text">{r.text}</p>
+              <div className="rl-rev-author">
+                <div className="rl-rev-ava">{r.i}</div>
+                <div><div className="rl-rev-name">{r.name}</div><div className="rl-rev-city">{r.city}</div></div>
               </div>
             </div>
-          </div>
-
-          <div class="visual">
-            <img src="Spain_pc_86bb5fb003.png" alt="Иллюстрация Релокац про переезд в Испанию" />
-            <div class="visual-badge">Испания: ВНЖ, сроки и документы</div>
-          </div>
-        </div>
-
-        <div class="form-wrap" id="survey">
-          <div class="form-head">
-            <div class="form-title">
-              <strong>Анкета переезда</strong>
-              <span>Выберите подходящее, остальное подскажем по результату</span>
-            </div>
-            <div class="step-pill" id="step-pill">1 / 7</div>
-          </div>
-
-          <div class="progress" id="progress"></div>
-
-          <div class="card active" id="c1">
-            <div class="card-num">Вопрос 1 из 7</div>
-            <h3>На каком этапе в подготовке к переезду вы находитесь сейчас?</h3>
-            <div class="options">
-              <div class="opt" data-val="start" onclick="selectOne(this)"><div class="check"></div>Только начинаю изучать</div>
-              <div class="opt" data-val="chosen" onclick="selectOne(this)"><div class="check"></div>Выбрал/а страну, ищу помощь</div>
-            </div>
-            <p class="err" id="e1">Пожалуйста, выберите вариант</p>
-            <div class="actions"><button class="btn-next" onclick="next(1)">Далее</button></div>
-          </div>
-
-          <div class="card" id="c2">
-            <div class="card-num">Вопрос 2 из 7</div>
-            <h3>В какую страну вы планируете переезд? Можно выбрать несколько.</h3>
-            <div class="options" id="c2opts">
-              <div class="opt multi" data-val="serbia" onclick="selectMulti(this)"><div class="check"></div>Сербия</div>
-              <div class="opt multi" data-val="spain" onclick="selectMulti(this)"><div class="check"></div>Испания</div>
-              <div class="opt multi" data-val="germany" onclick="selectMulti(this)"><div class="check"></div>Германия</div>
-              <div class="opt multi" data-val="uk" onclick="selectMulti(this)"><div class="check"></div>Великобритания</div>
-              <div class="opt multi" data-val="armenia" onclick="selectMulti(this)"><div class="check"></div>Армения</div>
-              <div class="opt multi" data-val="georgia" onclick="selectMulti(this)"><div class="check"></div>Грузия</div>
-              <div class="opt multi" data-val="argentina" onclick="selectMulti(this)"><div class="check"></div>Аргентина</div>
-              <div class="opt multi" data-val="brazil" onclick="selectMulti(this)"><div class="check"></div>Бразилия</div>
-              <div class="opt multi" data-val="usa" onclick="selectMulti(this)"><div class="check"></div>США</div>
-              <input class="custom-input" id="c2custom" placeholder="Другая страна..." oninput="handleCountryInput()" />
-              <div class="opt multi" data-val="help_country" onclick="selectMulti(this, true)"><div class="check"></div>Нужна помощь с выбором</div>
-            </div>
-            <p class="err" id="e2">Пожалуйста, выберите вариант или введите страну</p>
-            <div class="actions"><button class="btn-back" onclick="prev(2)" aria-label="Назад">←</button><button class="btn-next" onclick="next(2)">Далее</button></div>
-          </div>
-
-          <div class="card" id="c3">
-            <div class="card-num">Вопрос 3 из 7</div>
-            <h3>Уже знаете, по какому основанию будете переезжать?</h3>
-            <div class="options">
-              <div class="opt" data-val="nomad" onclick="selectOne(this)"><div class="check"></div>Цифровой кочевник</div>
-              <div class="opt" data-val="study" onclick="selectOne(this)"><div class="check"></div>Учёба</div>
-              <div class="opt" data-val="business" onclick="selectOne(this)"><div class="check"></div>Бизнес</div>
-              <div class="opt" data-val="help_basis" onclick="selectOne(this)"><div class="check"></div>Нужна помощь с выбором</div>
-            </div>
-            <p class="err" id="e3">Пожалуйста, выберите вариант</p>
-            <div class="actions"><button class="btn-back" onclick="prev(3)" aria-label="Назад">←</button><button class="btn-next" onclick="next(3)">Далее</button></div>
-          </div>
-
-          <div class="card" id="c4">
-            <div class="card-num">Вопрос 4 из 7</div>
-            <h3>Как срочно вам нужно переехать?</h3>
-            <div class="options">
-              <div class="opt" data-val="asap" onclick="selectOne(this)"><div class="check"></div>Как можно скорее</div>
-              <div class="opt" data-val="2_6mo" onclick="selectOne(this)"><div class="check"></div>Есть 2-6 месяцев</div>
-              <div class="opt" data-val="year" onclick="selectOne(this)"><div class="check"></div>До года</div>
-              <div class="opt" data-val="later" onclick="selectOne(this)"><div class="check"></div>Через несколько лет</div>
-            </div>
-            <p class="err" id="e4">Пожалуйста, выберите вариант</p>
-            <div class="actions"><button class="btn-back" onclick="prev(4)" aria-label="Назад">←</button><button class="btn-next" onclick="next(4)">Далее</button></div>
-          </div>
-
-          <div class="card" id="c5">
-            <div class="card-num">Вопрос 5 из 7</div>
-            <h3>С кем вы хотите переехать?</h3>
-            <div class="options">
-              <div class="opt" data-val="alone" onclick="selectOne(this)"><div class="check"></div>Один</div>
-              <div class="opt" data-val="partner" onclick="selectOne(this)"><div class="check"></div>С партнёром</div>
-              <div class="opt" data-val="family" onclick="selectOne(this)"><div class="check"></div>С семьёй</div>
-            </div>
-            <p class="err" id="e5">Пожалуйста, выберите вариант</p>
-            <div class="actions"><button class="btn-back" onclick="prev(5)" aria-label="Назад">←</button><button class="btn-next" onclick="next(5)">Далее</button></div>
-          </div>
-
-          <div class="card" id="c6">
-            <div class="card-num">Вопрос 6 из 7</div>
-            <h3>Укажите диапазон вашего среднего дохода за последние 3 месяца.</h3>
-            <div class="options">
-              <div class="opt" data-val="lt2k" onclick="selectOne(this)"><div class="check"></div>До 2 000 $</div>
-              <div class="opt" data-val="2k_3k" onclick="selectOne(this)"><div class="check"></div>2 000 $ - 3 000 $</div>
-              <div class="opt" data-val="3k_5k" onclick="selectOne(this)"><div class="check"></div>3 000 $ - 5 000 $</div>
-              <div class="opt" data-val="gt5k" onclick="selectOne(this)"><div class="check"></div>Больше 5 000 $</div>
-            </div>
-            <p class="err" id="e6">Пожалуйста, выберите вариант</p>
-            <div class="actions"><button class="btn-back" onclick="prev(6)" aria-label="Назад">←</button><button class="btn-next" onclick="next(6)">Далее</button></div>
-          </div>
-
-          <div class="card" id="c7">
-            <div class="card-num">Вопрос 7 из 7</div>
-            <h3>Какой у вас уровень накоплений?</h3>
-            <div class="options">
-              <div class="opt" data-val="none" onclick="selectOne(this)"><div class="check"></div>Нет накоплений</div>
-              <div class="opt" data-val="2k_5k" onclick="selectOne(this)"><div class="check"></div>От 2 000 $ до 5 000 $</div>
-              <div class="opt" data-val="5k_10k" onclick="selectOne(this)"><div class="check"></div>От 5 000 $ до 10 000 $</div>
-              <div class="opt" data-val="gt10k" onclick="selectOne(this)"><div class="check"></div>Больше 10 000 $</div>
-            </div>
-            <p class="err" id="e7">Пожалуйста, выберите вариант</p>
-            <div class="actions"><button class="btn-back" onclick="prev(7)" aria-label="Назад">←</button><button class="btn-next" onclick="finish()">Завершить</button></div>
-          </div>
-
-          <div class="result-card" id="result-consult">
-            <div class="result-icon">
-              <svg viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5l-5 5v-5z"/></svg>
-            </div>
-            <h3>Отличный выбор — вы уже на правильном пути!</h3>
-            <p>Запишитесь на бесплатную консультацию, чтобы узнать подробности о вашем будущем способе переезда.</p>
-            <a class="cta" href="https://goo.su/tsrNXn" target="_blank" rel="noreferrer">Записаться на консультацию</a>
-          </div>
-
-          <div class="result-card" id="result-telegram">
-            <div class="result-icon">
-              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <h3>Давайте обсудим ваш кейс!</h3>
-            <p>Напишите нам в Telegram — мы подберём подходящий вариант переезда именно для вас.</p>
-            <a class="cta" href="https://t.me/relokacbot" target="_blank" rel="noreferrer">Написать в Telegram</a>
-          </div>
-        </div>
+          </Fade>
+        ))}
       </div>
-
-      <footer class="footer-note">
-        <span>Релокац, 2026 ©</span>
-        <a href="https://relokatz.com/country/es" target="_blank" rel="noreferrer">Страница-референс: relokatz.com/country/es</a>
-      </footer>
     </section>
-  </main>
+  );
+}
 
-  <script>
-    var ans = { q1: null, q2: [], q2custom: "", q3: null, q4: null, q5: null, q6: null, q7: null };
-    var total = 7;
+function CTASection() {
+  return (
+    <section className="rl-section rl-form-section" id="cta">
+      <div className="rl-form-layout">
+        <Fade>
+          <div className="rl-fi">
+            <div className="rl-sec-label">Запись к специалисту</div>
+            <h2>Первый шаг к переезду — бесплатная консультация</h2>
+            <p className="rl-fi-sub">Наш специалист по переезду в Сербию свяжется с вами в течение 24 часов. Консультация бесплатна и ни к чему не обязывает.</p>
+            <div className="rl-perks">
+              {PERKS.map((p,i) => (
+                <div key={i} className="rl-perk">
+                  <div className="rl-perk-ic">{p.icon}</div>
+                  <div><strong>{p.title}</strong><span>{p.sub}</span></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Fade>
+        <Fade delay={120}>
+          <div className="rl-form-box rl-cta-box">
+            <div className="rl-cta-icon">🇷🇸</div>
+            <h3>Записаться на консультацию</h3>
+            <p className="fsub">Заполните анкету — специалист свяжется с вами в течение 24 часов</p>
+            <a href={TG} target="_blank" rel="noopener noreferrer" className="rl-submit-link">
+              Отправить анкету и получить консультацию →
+            </a>
+            <p className="rl-form-note">🔒 Данные защищены · Спам не рассылаем</p>
+          </div>
+        </Fade>
+      </div>
+    </section>
+  );
+}
 
-    function renderProgress(current) {
-      var p = document.getElementById("progress");
-      var pill = document.getElementById("step-pill");
-      p.innerHTML = "";
-      pill.textContent = current + " / " + total;
-      for (var i = 1; i <= total; i++) {
-        var d = document.createElement("div");
-        d.className = "progress-dot" + (i < current ? " done" : i === current ? " active" : "");
-        p.appendChild(d);
-      }
-    }
+function Footer() {
+  return (
+    <footer className="rl-footer">
+      <div className="rl-footer-logo"><div className="rl-nav-logo-dot"></div>Релокац</div>
+      <div className="rl-footer-copy">Специалисты по переезду в Сербию · Релокац, 2026 ©</div>
+      <div className="rl-footer-links">
+        <a href="https://relokatz.com/country/rs" target="_blank" rel="noopener noreferrer">relokatz.com</a>
+        <a href="https://t.me/+9hK6cvYbJIFjY2Qy" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://relokatz.com/country/rs/services" target="_blank" rel="noopener noreferrer">Услуги</a>
+      </div>
+    </footer>
+  );
+}
 
-    function selectOne(el) {
-      var parent = el.closest(".options");
-      parent.querySelectorAll(".opt").forEach(function(o) { o.classList.remove("selected"); });
-      el.classList.add("selected");
-      var card = el.closest(".card");
-      var n = card.id.replace("c", "");
-      ans["q" + n] = el.getAttribute("data-val");
-      card.querySelector(".err").style.display = "none";
-    }
+function App() {
+  return (
+    <>
+      <Nav />
+      <Hero />
+      <WhySection />
+      <NumbersSection />
+      <ProcessSection />
+      <TestimonialsSection />
+      <CTASection />
+      <Footer />
+    </>
+  );
+}
 
-    function selectMulti(el, exclusive) {
-      var parent = el.closest(".options");
-      if (exclusive) {
-        parent.querySelectorAll(".opt").forEach(function(o) { o.classList.remove("selected"); });
-        document.getElementById("c2custom").value = "";
-        ans.q2custom = "";
-        el.classList.add("selected");
-        ans.q2 = ["help_country"];
-      } else {
-        var helpEl = parent.querySelector('[data-val="help_country"]');
-        if (helpEl) helpEl.classList.remove("selected");
-        el.classList.toggle("selected");
-        rebuildQ2();
-      }
-      document.getElementById("e2").style.display = "none";
-    }
-
-    function rebuildQ2() {
-      var selected = document.querySelectorAll("#c2opts .opt.selected");
-      ans.q2 = [];
-      selected.forEach(function(o) { ans.q2.push(o.getAttribute("data-val")); });
-    }
-
-    function handleCountryInput() {
-      ans.q2custom = document.getElementById("c2custom").value.trim();
-      if (ans.q2custom) {
-        var helpEl = document.querySelector('[data-val="help_country"]');
-        if (helpEl) helpEl.classList.remove("selected");
-        rebuildQ2();
-      }
-      document.getElementById("e2").style.display = "none";
-    }
-
-    function getQ2Valid() {
-      handleCountryInput();
-      return ans.q2.length > 0 || ans.q2custom.length > 0;
-    }
-
-    function showCard(n) {
-      document.querySelectorAll(".card").forEach(function(card) { card.classList.remove("active"); });
-      document.getElementById("c" + n).classList.add("active");
-      document.getElementById("progress").style.display = "grid";
-      document.getElementById("step-pill").style.display = "block";
-      renderProgress(n);
-      document.getElementById("survey").scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-
-    function next(n) {
-      if (n === 2) {
-        if (!getQ2Valid()) {
-          document.getElementById("e2").style.display = "block";
-          return;
-        }
-      } else if (!ans["q" + n]) {
-        document.getElementById("e" + n).style.display = "block";
-        return;
-      }
-      showCard(n + 1);
-    }
-
-    function prev(n) {
-      showCard(n - 1);
-    }
-
-    function finish() {
-      if (!ans.q7) {
-        document.getElementById("e7").style.display = "block";
-        return;
-      }
-
-      document.getElementById("c7").classList.remove("active");
-      document.getElementById("progress").style.display = "none";
-      document.getElementById("step-pill").style.display = "none";
-
-      var isConsult = (
-        ans.q1 === "chosen" &&
-        ans.q2.indexOf("spain") !== -1 &&
-        ans.q3 === "nomad" &&
-        (ans.q4 === "asap" || ans.q4 === "2_6mo") &&
-        (ans.q6 === "3k_5k" || ans.q6 === "gt5k")
-      );
-
-      document.getElementById(isConsult ? "result-consult" : "result-telegram").classList.add("active");
-      document.getElementById("survey").scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-
-    renderProgress(1);
-  </script>
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+</script>
 </body>
 </html>
